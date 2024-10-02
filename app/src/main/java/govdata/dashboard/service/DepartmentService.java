@@ -48,19 +48,27 @@ public class DepartmentService {
     List<Department> departments = Mono
       // propagates error if there is a problem with the resource
       .fromCallable(this::getDepartmentsFromFile)
+      // try to read the file content as JSON
       .map(CheckedFunctionHelper.wrap(mapper::readTree))
+      // check if the parsed JSON contains a top-level "departments" field
       .filter(tree -> tree.has("departments"))
+      // extract the "departments" field
       .map(tree -> tree.get("departments"))
+      // check if the "departments" field actually is an array
       .filter(JsonNode::isArray)
+      // if there is any error while parsing the content, create an error Mono
       .switchIfEmpty(this.createError())
+      // try to read the departments and map them to Department objects
       .map(
         CheckedFunctionHelper.wrap(node ->
           mapper.readValue(node.traverse(), Department[].class)
         )
       )
       .map(Arrays::asList)
+      // Catch any error and store it for later
       .doOnError(this.handleError())
       .doOnSuccess(d -> log.info("Loaded {} departments", d.size()))
+      // finally, create an empty list if there is an error
       .onErrorReturn(new ArrayList<>())
       .block();
 
@@ -101,6 +109,11 @@ public class DepartmentService {
     };
   }
 
+  /**
+   * Checks if a department is matching a known subordinate or a department.
+   * @param departmentName Departments or subordinate
+   * @return
+   */
   public Boolean isValidSubordinateOrDepartment(String departmentName) {
     return (
       this.departmentNames.contains(departmentName) ||
@@ -121,6 +134,10 @@ public class DepartmentService {
       );
   }
 
+  /**
+   * Create a mapping from subordinates to their department.
+   * @param departments The departments extracted from the departments file
+   */
   private Map<String, String> mapSubordinateToDepartment(
     List<Department> departments
   ) {

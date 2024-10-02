@@ -52,7 +52,7 @@ public class DashboardService {
   }
 
   /**
-   * Requests the organziation list from the CKAN API.
+   * Requests the organization list from the CKAN API.
    */
   private Mono<CKANOrganizationResponse> requestOrganizations() {
     return this.webClient.get()
