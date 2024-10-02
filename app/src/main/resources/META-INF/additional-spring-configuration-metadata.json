@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "departments.file",
+      "type": "java.lang.String",
+      "description": "JSON file pointing to a predefined set of departments (federal ministries and subordinates)"
+    },
+    {
+      "name": "govdata.ckan.url",
+      "type": "java.lang.String",
+      "description": "GovData CKAN API URL"
+    },
+    {
+      "name": "govdata.ckan.api-version",
+      "type": "java.lang.String",
+      "description": "GovData CKAN API Version"
+    }
+  ]
+}
