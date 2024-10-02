@@ -1,6 +1,6 @@
 # GovData Dashboard (Backend Challenge)
 
-A Spring Boot web application written in Java that provides a dashboard showing how many data sets each German federal ministry has made available on GovData.de. The data is fetched from the official [GovData.de API](https://www.govdata.de/ckan/api/3/) and displayed in a table. The table is sorted by the total number of published data sets in descending order. The total number of data sets of each ministry is computed by counting and summing the number of data sets per ministry and their subordinate agencies.
+A Spring Boot web application written in Java that provides a dashboard showing how many data sets each German federal ministry has made available on [GovData.de](https://www.govdata.de/). The data is fetched from the official [GovData.de API](https://www.govdata.de/ckan/api/3/) and displayed in a table. The table is sorted by the total number of published data sets in descending order. The total number of data sets of each ministry is computed by counting and summing the number of data sets per ministry and their subordinate agencies.
 
 ## Tooling
 
