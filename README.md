@@ -30,10 +30,10 @@ Note: Execution requires Java 21.
 
 The application can be run in two ways:
 
-- From existing jar: `java -jar build/govdata-dashboard-0.0.1-SNAPSHOT.jar`
+- From existing jar: `java -jar ./app/build/libs/govdata-dashboard-0.0.1-SNAPSHOT.jar`
 - From source: `./gradlew bootRun` on Linux resp. `.\gradlew.bat bootRun` on Windows
 
-The application automatically reads the default departments from the `src/main/resources/departments.json` at startup. If you want to change this, you can either directly change the file (or its content) or pass the departments as a command line argument: `java -jar build/govdata-dashboard-0.0.1-SNAPSHOT.jar --departments.file=my-custom-departments.json` or `./gradlew bootRun --args="--departments.file=my-custom-departments.json"`.
+The application automatically reads the default departments from the `src/main/resources/departments.json` at startup. If you want to change this, you can either directly change the file (or its content) or pass the departments as a command line argument: `java -jar ./app/build/libs/govdata-dashboard-0.0.1-SNAPSHOT.jar --departments.file=my-custom-departments.json` or `./gradlew bootRun --args="--departments.file=my-custom-departments.json"`.
 The JSON file must conform to the structure of `src/main/resources/departments.json`. Any adjustments to the file will require an application restart.
 
 ### Accessing the dashboard
