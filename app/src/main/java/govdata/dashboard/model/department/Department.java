@@ -1,4 +1,4 @@
-package govdata.dashboard.model;
+package govdata.dashboard.model.department;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;

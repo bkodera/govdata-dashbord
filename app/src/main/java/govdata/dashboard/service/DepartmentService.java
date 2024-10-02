@@ -4,8 +4,9 @@ import static java.util.stream.Collectors.toMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import govdata.dashboard.model.Department;
-import govdata.dashboard.model.SubOrdinate;
+import govdata.dashboard.model.department.Department;
+import govdata.dashboard.model.department.SubOrdinate;
+import govdata.dashboard.util.CheckedFunctionHelper;
 import jakarta.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;

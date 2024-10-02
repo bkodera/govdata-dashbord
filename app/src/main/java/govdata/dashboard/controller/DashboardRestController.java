@@ -1,6 +1,6 @@
 package govdata.dashboard.controller;
 
-import govdata.dashboard.model.DepartmentDto;
+import govdata.dashboard.model.department.DepartmentDto;
 import govdata.dashboard.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

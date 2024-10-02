@@ -1,8 +1,8 @@
 package govdata.dashboard.service;
 
-import govdata.dashboard.model.CKANOrganizationEntity;
-import govdata.dashboard.model.CKANOrganizationResponse;
-import govdata.dashboard.model.DepartmentDto;
+import govdata.dashboard.model.ckan.CKANOrganizationEntity;
+import govdata.dashboard.model.ckan.CKANOrganizationResponse;
+import govdata.dashboard.model.department.DepartmentDto;
 import java.net.URI;
 import java.util.Comparator;
 import java.util.function.Function;
@@ -91,7 +91,7 @@ public class DashboardService {
    */
   private Predicate<? super CKANOrganizationEntity> isValidSubordinateOrDepartment() {
     return org ->
-      this.departmentService.isValidSubordinateOrDepartment(org.displayName());
+      this.departmentService.isValidSubordinateOrDepartment(org.name());
   }
 
   /**
@@ -118,8 +118,7 @@ public class DashboardService {
    */
   private Function<CKANOrganizationEntity, DepartmentDto> toDepartmentDto() {
     return org -> {
-      String department =
-        this.departmentService.toDepartment(org.displayName());
+      String department = this.departmentService.toDepartment(org.name());
       return new DepartmentDto(department, org.packageCount());
     };
   }

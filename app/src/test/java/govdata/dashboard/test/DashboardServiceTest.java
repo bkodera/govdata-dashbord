@@ -1,8 +1,8 @@
 package govdata.dashboard.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import govdata.dashboard.model.CKANOrganizationResponse;
-import govdata.dashboard.model.DepartmentDto;
+import govdata.dashboard.model.ckan.CKANOrganizationResponse;
+import govdata.dashboard.model.department.DepartmentDto;
 import govdata.dashboard.service.DashboardService;
 import govdata.dashboard.service.DepartmentService;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package govdata.dashboard.model;
+package govdata.dashboard.model.ckan;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
