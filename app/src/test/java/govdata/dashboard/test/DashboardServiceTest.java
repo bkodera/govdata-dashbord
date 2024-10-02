@@ -33,6 +33,7 @@ class DashboardServiceTest {
 
   @BeforeEach
   void setUp() throws Exception {
+    // Creates a web server that intercepts a request to the base url
     this.mockWebServer = new MockWebServer();
     this.mockWebServer.url("/");
     this.mockWebServer.start();
@@ -54,6 +55,7 @@ class DashboardServiceTest {
   void testComputesCorrectDatasetCounts() throws IOException {
     CKANOrganizationResponse mockResponseBody =
       this.readOrganizationResponse("organizations_valid.json");
+    // simulate a response from the API by returning a valid mock response
     this.mockWebServer.enqueue(
         new MockResponse()
           .setBody(this.mapper.writeValueAsString(mockResponseBody))
@@ -75,6 +77,7 @@ class DashboardServiceTest {
   void testExpectsErrorForInvalidResponse() throws IOException {
     CKANOrganizationResponse mockResponseBody =
       this.readOrganizationResponse("organizations_invalid.json");
+    // simulate a erroneous response from the API by returning an invalid mock response
     this.mockWebServer.enqueue(
         new MockResponse()
           .setBody(this.mapper.writeValueAsString(mockResponseBody))

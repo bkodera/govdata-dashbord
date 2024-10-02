@@ -1,7 +1,7 @@
 package govdata.dashboard.util;
 
 /**
- * Regular function signature that can throw a checked exception
+ * Extension of the regular function signature that additionally allows throwing a checked exception.
  */
 @FunctionalInterface
 public interface CheckedFunction<T, R> {

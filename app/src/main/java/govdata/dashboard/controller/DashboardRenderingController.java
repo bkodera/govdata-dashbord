@@ -20,10 +20,12 @@ public class DashboardRenderingController {
     return this.dashboardService.computeDepartmentDataSetCounts()
       .collectList()
       .map(datasets ->
+        // Use the templates/index.html and pass the data to the template
         Rendering.view("index").modelAttribute("datasets", datasets).build()
       )
       .onErrorResume(error ->
         Mono.just(
+          // Render the error page templates/error.html if there is an error
           Rendering
             .view("error")
             .modelAttribute("errorMessage", error.getMessage())
