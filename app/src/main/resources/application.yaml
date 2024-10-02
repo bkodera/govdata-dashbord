@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: GovData Dashboard
+  profiles:
+    active: development
+
+govdata:
+  ckan:
+    apiVersion: 3
+    url: https://www.govdata.de/ckan/api/${govdata.ckan.apiVersion:3}/action/
+
+departments:
+  file: departments.json
