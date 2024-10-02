@@ -48,12 +48,16 @@ public class DepartmentService {
     List<Department> departments = Mono
       // propagates error if there is a problem with the resource
       .fromCallable(this::getDepartmentsFromFile)
-      .map(wrap(mapper::readTree))
+      .map(CheckedFunctionHelper.wrap(mapper::readTree))
       .filter(tree -> tree.has("departments"))
       .map(tree -> tree.get("departments"))
       .filter(JsonNode::isArray)
       .switchIfEmpty(this.createError())
-      .map(wrap(node -> mapper.readValue(node.traverse(), Department[].class)))
+      .map(
+        CheckedFunctionHelper.wrap(node ->
+          mapper.readValue(node.traverse(), Department[].class)
+        )
+      )
       .map(Arrays::asList)
       .doOnError(this.handleError())
       .doOnSuccess(d -> log.info("Loaded {} departments", d.size()))
@@ -131,22 +135,5 @@ public class DepartmentService {
           .stream()
       )
       .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
-  }
-
-  @FunctionalInterface
-  public interface CheckedFunction<T, R> {
-    R apply(T t) throws Exception;
-  }
-
-  public static <T, R> Function<T, R> wrap(
-    CheckedFunction<T, R> checkedFunction
-  ) {
-    return t -> {
-      try {
-        return checkedFunction.apply(t);
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-    };
   }
 }
