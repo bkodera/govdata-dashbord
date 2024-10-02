@@ -20,7 +20,7 @@ A Spring Boot web application written in Java that provides a dashboard showing 
 
 ### Creating an executable Jar
 
-Create the jar file e.g. `build/govdata-dashboard-0.0.1-SNAPSHOT.jar` by executing the following command:
+Create the jar file e.g. `./app/build/libs/govdata-dashboard-0.0.1-SNAPSHOT.jar` by executing the following command:
 
 - `./gradlew bootJar`
 
