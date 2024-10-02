@@ -1,0 +1,13 @@
+{
+  "department": {
+    "name": "Bundesministerium der Justiz",
+    "subordinates": [
+      {
+        "name": "Deutsches Patent- und Markenamt"
+      },
+      {
+        "name": "Bundesamt für Justiz"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+logging:
+  level:
+    "[govdata.dashboard]": INFO
+
+departments:
+  file: "classpath:departments_valid.json"

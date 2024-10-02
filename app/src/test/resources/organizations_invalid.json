@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "error": {
+    "__type": "400",
+    "message": "Bad request"
+  }
+}
