@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +40,11 @@ public class DepartmentService {
   @Getter
   private Mono<String> error = Mono.empty();
 
+  /**
+   * Tries to read departments from a given JSON resource at startup.
+   * On success, departments are provided as a list to process by other services.
+   * On failure, an error Mono is created to be queried.
+   */
   @PostConstruct
   public void loadDefaultDepartments() {
     ObjectMapper mapper = new ObjectMapper();
@@ -77,6 +81,13 @@ public class DepartmentService {
       this.mapSubordinateToDepartment(departments);
   }
 
+  /**
+   * Tries to read the departments JSON file. Supports reading the file as an
+   * external resource (e.g. provided as a CLI parameter) or as the provided
+   * classpath resource.
+   * @return
+   * @throws IOException
+   */
   private InputStream getDepartmentsFromFile() throws IOException {
     File file = ResourceUtils.getFile(this.departmentsFile);
     if (file.exists()) {

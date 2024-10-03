@@ -17,6 +17,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.GroupedFlux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Service for communicating with the GovData CKAN API to retrieve organizations (ministries and subordinates) and their publications
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -25,26 +28,30 @@ public class DashboardService {
   private final WebClient webClient;
   private final DepartmentService departmentService;
 
+  /**
+   * Computes the total number of data sets for each department resp. ministry by calling the CKAN organization_list endpoint with all details to retrieve the package count (=data set count) for each organization. It then filters out all unmatched departments and subordinates and finally sums up all subordinate's and department's package counts belonging to a matched departments. The results are stored as a Flux of DepartmentDto instances for each ministry. Sorting is done in descending order by total number of data sets.
+   * @return Departments with name and data set count as a Flux
+   */
   public Flux<DepartmentDto> computeDepartmentDataSetCounts() {
-    // check if departments are available (no error) or propagate error message
+    // check if the departments service generated an error while processing the departments JSON file
     return this.departmentService.getError()
-      // continue if no error and make API GET request for organizations
+      // discard previous Mono only if there was no error and continue to make API GET request for organizations
       .then(this.requestOrganizations())
       // Propagate error message on request failure
       .flatMap(this.handleError())
-      // extract organizations from results field (on success)
+      // extract organizations list from "result" field (only on success)
       .map(CKANOrganizationResponse::result)
-      // turn result list into flux
+      // turn the result list into flux
       .flatMapMany(Flux::fromIterable)
-      // filter out irrelevant organizations (departments and subordinates)
+      // filter out unmatched resp. invalid organizations (departments and subordinates)
       .filter(this.isValidSubordinateOrDepartment())
       // create DTO with name and dataset counter
       .map(this.toDepartmentDto())
-      // merge missing departments from default (if there are no datasets)
+      // merge with missing departments from departments service (to ensure there is a DTO for each department)
       .mergeWith(this.defaultDepartmentNames())
       // group by name because there are duplicates
       .groupBy(DepartmentDto::name)
-      // add up dataset counts for all departments with the same name
+      // sum data set counts for all departments with the same name
       .flatMap(this.combineDuplicates())
       // sort items descending by data set count
       .sort(Comparator.comparingInt(DepartmentDto::dataSetCount).reversed())
